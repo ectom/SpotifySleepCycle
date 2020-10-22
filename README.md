@@ -8,6 +8,7 @@
 ## Technologies
 - React Native
 - Expo
+- Eslint
 
 ## Branches
 - A production ready build will be hosted from the `production` branch. Once `production` is ready to be updated to the latest `master`, merge `master` to `production`
@@ -26,3 +27,8 @@
 4) `git merge master` and resolve if any conflicts
 5) `git push`
 6) Create a Pull Request in Github
+
+## Eslint
+Be sure your code is in line with eslint before adding new features
+1) From the root directory `eslint .` will tell you of any style warnings/errors
+2) From the root directory `eslint . --fix` will automatically resolve most/all warnings/errors
