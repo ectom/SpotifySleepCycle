@@ -6,7 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "eslint"
+    "lint": "eslint src"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^5.9.2",
