@@ -8,7 +8,9 @@
 ## Technologies
 - React Native
 - Expo
+- Travis CI
 - Eslint
+- Jest
 
 ## Branches
 - A production ready build will be hosted from the `production` branch. Once `production` is ready to be updated to the latest `master`, merge `master` to `production`
@@ -30,5 +32,8 @@
 
 ## Eslint
 Be sure your code is in line with eslint before adding new features
-1) From the root directory `eslint .` will tell you of any style warnings/errors
-2) From the root directory `eslint . --fix` will automatically resolve most/all warnings/errors
+1) From the root directory `npm run lint` will tell you of any style warnings/errors
+2) From the root directory `eslint directory --fix` will automatically resolve warnings in `directory`
+
+## Unit Tests
+Unit tests are useful in order to make sure an individual piece of code is correct. The tests can be run using `npm run test` which will also run the linter
