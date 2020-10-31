@@ -4,8 +4,13 @@ export type RootStackParamList = {
 };
 
 export type BottomTabParamList = {
+  Spotify: undefined;
   TabOne: undefined;
   TabTwo: undefined;
+};
+
+export type SpotifyParamList = {
+  SpotifyScreen: undefined;
 };
 
 export type TabOneParamList = {
