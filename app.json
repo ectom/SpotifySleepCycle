@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "test",
-    "slug": "test",
-    "version": "1.0.0",
+    "name": "Spotify Sleep Cycle",
+    "slug": "spotify-sleep-cycle",
+    "owner": "ectom",
+    "scheme": "exp",
+    "version": "0.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
