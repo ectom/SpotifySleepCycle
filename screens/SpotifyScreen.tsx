@@ -17,10 +17,10 @@ const discovery = {
 const SpotifyScreen = () => {
 
   // These will hold info from API such as token, genre, etc
-  const [token, setToken] = useState('');
-  useEffect(() => {
-
-  }, []);
+  const [accessToken, setAccessToken] = useState('');
+  const [expiresIn, setExpiresIn] = useState('');
+  const [scope, setScope] = useState('');
+  const [tokenType, setTokenType] = useState('');
   const [genres, setGenres] = useState({ selectedGenre: '', listOfGenresFromAPI: [] });
   const [request, response, promptAsync] = useAuthRequest(
     {
@@ -40,6 +40,14 @@ const SpotifyScreen = () => {
         SecureStore.setItemAsync("AUTH_CODE", auth.code);
         SecureStore.setItemAsync("AUTH_STATE", auth.state);
       }
+      const tokenResponse = api.getToken();
+      tokenResponse.then(res => {
+        setAccessToken(res.data.access_token);
+        setExpiresIn(res.data.expires_in);
+        setScope(res.data.scope);
+        setTokenType(res.data.token_type);
+      })
+
     }
   }, [response]);
 
