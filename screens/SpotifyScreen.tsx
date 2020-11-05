@@ -8,11 +8,26 @@ import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import * as SecureStore from 'expo-secure-store';
 
 
-
 const discovery = {
   authorizationEndpoint: 'https://accounts.spotify.com/authorize',
   tokenEndpoint: 'https://accounts.spotify.com/api/token',
 };
+const scopes = [
+  'user-read-recently-played',
+  'user-read-playback-position',
+  'user-top-read',
+  'playlist-read-collaborative',
+  'playlist-read-private',
+  'streaming',
+  'app-remote-control',
+  'user-read-email',
+  'user-follow-read',
+  'user-follow-modify',
+  'user-library-read',
+  'user-read-currently-playing',
+  'user-read-playback-state',
+  'user-modify-playback-state'
+]
 
 const SpotifyScreen = () => {
 
@@ -25,7 +40,7 @@ const SpotifyScreen = () => {
   const [request, response, promptAsync] = useAuthRequest(
     {
       clientId: `${process.env.REACT_NATIVE_SPOTIFY_ID}`,
-      scopes: ['user-read-email', 'playlist-modify-public'],
+      scopes: scopes,
       usePKCE: false,
       redirectUri: makeRedirectUri({
         native: Linking.makeUrl(),
@@ -42,10 +57,13 @@ const SpotifyScreen = () => {
       }
       const tokenResponse = api.getToken();
       tokenResponse.then(res => {
-        setAccessToken(res.data.access_token);
-        setExpiresIn(res.data.expires_in);
-        setScope(res.data.scope);
-        setTokenType(res.data.token_type);
+        if(res.status == 200){
+          setAccessToken(res.data.access_token);
+          setExpiresIn(res.data.expires_in);
+          setScope(res.data.scope);
+          setTokenType(res.data.token_type);
+        }
+      
       })
 
     }
