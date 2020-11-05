@@ -7,7 +7,6 @@ import * as Linking from 'expo-linking';
 import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import * as SecureStore from 'expo-secure-store';
 
-
 const discovery = {
   authorizationEndpoint: 'https://accounts.spotify.com/authorize',
   tokenEndpoint: 'https://accounts.spotify.com/api/token',
@@ -29,8 +28,16 @@ const scopes = [
   'user-modify-playback-state'
 ]
 
-const SpotifyScreen = () => {
+const uuidv4 = () => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+const secureState = uuidv4();
+console.log('secure', secureState);
 
+const SpotifyScreen = () => {
   // These will hold info from API such as token, genre, etc
   const [accessToken, setAccessToken] = useState('');
   const [expiresIn, setExpiresIn] = useState('');
@@ -40,7 +47,9 @@ const SpotifyScreen = () => {
   const [request, response, promptAsync] = useAuthRequest(
     {
       clientId: `${process.env.REACT_NATIVE_SPOTIFY_ID}`,
+      responseType: 'code',
       scopes: scopes,
+      state: secureState,
       usePKCE: false,
       redirectUri: makeRedirectUri({
         native: Linking.makeUrl(),
@@ -52,12 +61,14 @@ const SpotifyScreen = () => {
     if (response?.type === 'success') {
       const auth = response.params;
       if (Platform.OS !== 'web') {
-        SecureStore.setItemAsync("AUTH_CODE", auth.code);
-        SecureStore.setItemAsync("AUTH_STATE", auth.state);
+        SecureStore.setItemAsync('AUTH_CODE', auth.code);
+        SecureStore.setItemAsync('AUTH_STATE', auth.state);
       }
       const tokenResponse = api.getToken();
       tokenResponse.then(res => {
         if(res.status == 200){
+          console.log(res.data);
+          
           setAccessToken(res.data.access_token);
           setExpiresIn(res.data.expires_in);
           setScope(res.data.scope);
