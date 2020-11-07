@@ -24,10 +24,10 @@ module.exports = {
 					listOfGenresFromAPI: genreResponse.data.categories.items
 				});
 			});
-  },
-  logout: async () => {
-    return axios.get('https://accounts.spotify.com/api/logout').then(res => console.log('res: ', res));
-  }
+	},
+	logout: async () => {
+		return axios.get('https://accounts.spotify.com/api/logout').then(res => console.log('res: ', res));
+	}
 };
 
 export default module.exports;
