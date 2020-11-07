@@ -64,11 +64,10 @@ const SpotifyScreen = () => {
         SecureStore.setItemAsync('AUTH_CODE', auth.code);
         SecureStore.setItemAsync('AUTH_STATE', auth.state);
       }
-      const tokenResponse = api.getToken();
+      const tokenResponse = api.getToken();      
       tokenResponse.then(res => {
         if(res.status == 200){
           console.log(res.data);
-          
           setAccessToken(res.data.access_token);
           setExpiresIn(res.data.expires_in);
           setScope(res.data.scope);
@@ -80,18 +79,33 @@ const SpotifyScreen = () => {
     }
   }, [response]);
 
+  const logout = () => {
+    const data = api.logout();
+    data.then(res => console.log(res));
+    setAccessToken('');
+    setExpiresIn('');
+    setScope('');
+    setTokenType('');
+    SecureStore.deleteItemAsync('AUTH_CODE')
+    SecureStore.deleteItemAsync('AUTH_STATE')
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Spotify</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/SpotifyScreen.js" />
+      {accessToken ? 
+        <Button
+        onPress={() => { logout() }}
+        title="Logout"
+      /> :
       <Button
         onPress={() => { promptAsync() }}
         disabled={!request}
         title="Login"
         color="#1DB954"
-      />
-      {/* <Text>User token: {token}</Text> */}
+      />        
+      }
+      
     </View>
   );
 }
